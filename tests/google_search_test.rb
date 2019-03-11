@@ -1,3 +1,5 @@
+require_relative '../tests/pages/search_page'
+
 require 'rubygems'
 require 'selenium-webdriver'
 # require 'selenium/client'
@@ -5,6 +7,8 @@ require 'rspec'
 require 'capybara'
 require 'capybara/dsl'
 require 'capybara/rspec'
+
+require 'site_prism'
 
 Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, :driver_path => "/home/tester/tools/chromedriver/241/chromedriver")
@@ -22,10 +26,14 @@ include Capybara::DSL
 
 
 visit "http://google.com"
-find("//input[@name='q']").send_keys "cheese!"
-find("//div[@jsname='VlcLAe']//input[@name='btnK']").click
+pageG = SearchPage.new
+pageG.wait_until_input_field_visible(wait: 10)
+pageG.input_field.set "cheese!"
+# find("//input[@name='q']").send_keys "cheese!"
+pageG.wait_until_button_search_visible(wait: 10)
+pageG.button_search.click
+# find("//div[@jsname='VlcLAe']//input[@name='btnK']").click
 expect(page.title).to eq("cheese! - Поcиск в Google")
-
 
 
 # Selenium::WebDriver::Chrome.driver_path='/home/tester/tools/chromedriver/241/chromedriver'
