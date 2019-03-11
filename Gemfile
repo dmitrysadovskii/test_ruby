@@ -3,3 +3,4 @@ source 'https://rubygems.org'
 
 gem 'selenium-webdriver', '3.13.1'
 gem 'rspec'
+gem 'capybara'
