@@ -3,7 +3,7 @@ Feature: Google search
 
   @test1
   Scenario: Simple search
-    Given Login google
+    Given Login "http://google.com"
     When Input in search field "cheese!"
     When Click submit button
     Then Check page title "cheese! - Поиск в Google"
